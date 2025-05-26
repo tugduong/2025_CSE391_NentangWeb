@@ -1,3 +1,6 @@
+import React, { useState, useEffect, useRef } from 'react';
+import '../App.css'; // CSS đồng hồ
+
 // Functional Clock Component
 function ClockFunction() {
   const [seconds, setSeconds] = useState(0);
@@ -5,43 +8,51 @@ function ClockFunction() {
   const [paused, setPaused] = useState(false);
   const timerRef = useRef(null);
 
-  // Mount log and unmount cleanup
+  // start timer helper
+  const startTimer = () => {
+    timerRef.current = setInterval(() => {
+      setSeconds(prev => {
+        const next = prev + 1;
+        console.log(`tick → seconds: ${next}`);
+        return next;
+      });
+    }, 1000);
+  };
+
+  // stop timer helper
+  const stopTimer = () => {
+    clearInterval(timerRef.current);
+  };
+
+  // Mount: just log
   useEffect(() => {
     console.log('useEffect (mount) → color = blue');
     return () => {
       console.log('useEffect cleanup (unmount) → color = red');
-      clearInterval(timerRef.current);
+      stopTimer();
     };
   }, []);
 
-  // Handle timer based on paused state
+  // Handle pause/resume and start on initial mount
   useEffect(() => {
     if (!paused) {
       console.log(`useEffect → resumed, color = ${color}`);
-      timerRef.current = setInterval(() => {
-        setSeconds(prev => {
-          const next = prev + 1;
-          console.log(`tick → seconds: ${next}`);
-          return next;
-        });
-      }, 1000);
+      startTimer();
     } else {
       console.log(`useEffect → paused, color = ${color}`);
+      stopTimer();
     }
-    return () => clearInterval(timerRef.current);
-  }, [paused, color]);
+    return () => stopTimer();
+  }, [paused]);
 
-  // Toggle pause: bấm Pause thì đổi màu, bấm Resume thì giữ nguyên
+  // Toggle pause: change color on pause only
   const togglePause = () => {
-    setPaused(prevPaused => {
-      const nextPaused = !prevPaused;
-
-      if (nextPaused) {
-        // Khi vừa bấm Pause: luân phiên màu vàng ↔ xanh
+    setPaused(prev => {
+      const next = !prev;
+      if (next) {
         setColor(prevColor => (prevColor === 'yellow' ? 'green' : 'yellow'));
       }
-
-      return nextPaused;
+      return next;
     });
   };
 
@@ -56,12 +67,28 @@ function ClockFunction() {
           backgroundColor: color
         }}
       />
-      <div className="counter">
-        Đã trôi: {seconds} giây
-      </div>
+      <div className="counter">Đã trôi: {seconds} giây</div>
       <button onClick={togglePause} className="pause-button">
         {paused ? 'Tiếp tục' : 'Tạm dừng'}
       </button>
     </div>
   );
 }
+
+// Functional parent managing show/hide
+function FunctionLifecycle() {
+  const [showClock, setShowClock] = useState(true);
+
+  const toggleClock = () => setShowClock(prev => !prev);
+
+  return (
+    <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+      <button onClick={toggleClock} style={{ marginBottom: '1rem' }}>
+        {showClock ? 'Ẩn đồng hồ' : 'Hiện đồng hồ'}
+      </button>
+      {showClock && <ClockFunction />}
+    </div>
+  );
+}
+
+export default FunctionLifecycle;

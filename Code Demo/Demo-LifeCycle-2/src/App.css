@@ -8,11 +8,10 @@
 
   display: flex;
   flex-direction: column;
-  align-items: center;       /* căn giữa ngang */
-  justify-content: center;   /* căn giữa dọc */
+  align-items: center;       
+  justify-content: center;  
 }
 
-/* Kim vẫn giữ absolute để quay quanh tâm */
 .hand {
   position: absolute;
   bottom: 50%;
@@ -23,7 +22,6 @@
   transition: transform 0.5s ease;
 }
 
-/* Counter và nút đều là flex items */
 .counter {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -32,7 +30,7 @@
 }
 
 .pause-button {
-  margin-top: 8px;   /* 8px khoảng cách so với counter */
+  margin-top: 8px;  
   padding: 6px 12px;
   font-size: 14px;
   cursor: pointer;

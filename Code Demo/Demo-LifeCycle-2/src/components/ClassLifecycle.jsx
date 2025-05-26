@@ -1,90 +1,103 @@
-import React, { useState, useEffect, useRef } from 'react';
-import '../App.css'; // CSS đồng hồ
+import React from 'react';
+import '../App.css'; 
 
-// Functional Clock Component
-function ClockFunction() {
-  const [seconds, setSeconds] = useState(0);
-  const [color, setColor] = useState('blue');
-  const [paused, setPaused] = useState(false);
-  const timerRef = useRef(null);
-
-  // Mount log and unmount cleanup
-  useEffect(() => {
-    console.log('useEffect (mount) → color = blue');
-    return () => {
-      console.log('useEffect cleanup (unmount) → color = red');
-      clearInterval(timerRef.current);
+class ClockLifecycle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      seconds: 0,
+      color: 'blue',
+      paused: false
     };
-  }, []);
+    console.log('constructor → Khởi tạo state');
+  }
 
-  // Handle timer based on paused state
-  useEffect(() => {
-    if (!paused) {
-      console.log(`useEffect → resumed, color = ${color}`);
-      timerRef.current = setInterval(() => {
-        setSeconds(prev => {
-          const next = prev + 1;
-          console.log(`tick → seconds: ${next}`);
-          return next;
-        });
-      }, 1000);
-    } else {
-      console.log(`useEffect → paused, color = ${color}`);
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('getDerivedStateFromProps → Nhận props mới');
+    // Không thay đổi state dựa trên props trong ví dụ này
+    return null;
+  }
+
+  componentDidMount() {
+    console.log('Component đã được mount');
+    this.startTimer();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('Kiểm tra xem có nên render lại không');
+    return true;
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log('Trước khi cập nhật DOM');
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('componentDidUpdate → Component đã cập nhật');
+    if (prevState.paused !== this.state.paused) {
+      console.log(`Trạng thái paused thay đổi: ${this.state.paused}`);
     }
-    return () => clearInterval(timerRef.current);
-  }, [paused]);
+  }
 
-  // Toggle pause: on resume, alternate color; on pause, no color change
-  const togglePause = () => {
-    setPaused(prevPaused => {
-      const nextPaused = !prevPaused;
-      if (!nextPaused) {
-        // Resuming: toggle hand color between green and yellow
-        setColor(prevColor => (prevColor === 'yellow' ? 'green' : 'yellow'));
+  componentWillUnmount() {
+    console.log('componentWillUnmount → Component sẽ bị unmount');
+    clearInterval(this.timerID);
+  }
+
+  componentDidCatch(error, info) {
+    console.log('componentDidCatch → Bắt lỗi trong component con');
+    console.error(error, info);
+  }
+
+  startTimer = () => {
+    this.timerID = setInterval(() => {
+      this.setState(prevState => ({ seconds: prevState.seconds + 1 }));
+    }, 1000);
+  };
+
+  stopTimer = () => {
+    clearInterval(this.timerID);
+  };
+
+  togglePause = () => {
+    this.setState(prevState => {
+      const isPaused = !prevState.paused;
+      return {
+        paused: isPaused,
+        color: isPaused ? 'yellow' : 'green'
+      };
+    }, () => {
+      if (this.state.paused) {
+        this.stopTimer();
+      } else {
+        this.startTimer();
       }
-      return nextPaused;
     });
   };
 
-  const angle = seconds * 6;
+  render() {
+    const { seconds, color, paused } = this.state;
+    const angle = seconds * 6;
 
-  return (
-    <div className="clock">
-      <div
-        className="hand"
-        style={{
-          transform: `rotate(${angle}deg)`,
-          backgroundColor: color
-        }}
-      />
-      <div className="counter">
-        Đã trôi: {seconds} giây
+    return (
+      <div className="clock">
+        <div
+          className="hand"
+          style={{
+            transform: `rotate(${angle}deg)`,
+            backgroundColor: color
+          }}
+        />
+        <div className="counter">
+          Đã trôi: {seconds} giây
+        </div>
+        <button onClick={this.togglePause} className="pause-button">
+          {paused ? 'Tiếp tục' : 'Tạm dừng'}
+        </button>
       </div>
-      <button onClick={togglePause} className="pause-button">
-        {paused ? 'Tiếp tục' : 'Tạm dừng'}
-      </button>
-    </div>
-  );
+    );
+  }
 }
 
-// Functional parent managing show/hide
-function FunctionLifecycle() {
-  const [showClock, setShowClock] = useState(true);
-
-  const toggleClock = () => {
-    setShowClock(prev => !prev);
-  };
-
-  return (
-    <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-      <button onClick={toggleClock} style={{ marginBottom: '1rem' }}>
-        {showClock ? 'Ẩn đồng hồ' : 'Hiện đồng hồ'}
-      </button>
-      <div>
-        {showClock && <ClockFunction />}
-      </div>
-    </div>
-  );
-}
-
-export default FunctionLifecycle;
+export default ClockLifecycle;
