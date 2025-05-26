@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bai 4</title>
+    <style>
+        .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        }
+        .label-title {
+            font-weight: bold;
+            width: 200px;
+            margin-right: 5px;
+        }
+        .radio-group {
+        display: flex;
+        flex-direction: column;
+        }
+        .form-group input{
+            padding: 5px;
+            flex: 1;
+        }
+        .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <section>
+            <h2>Basic Info</h2>
+            <hr />
+            <div class = "form-group">
+                <label class = "label-title"> Employee ID</label>
+                <label> 9</label>
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">Last Name</label>
+                <label>Dodsworth</label>
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">First Name</label>
+                <input type="text" value="Anne"/>
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">Gender</label>
+                <div class = "radio-group">
+                <label><input type="radio" name = "gender">Male</label>
+                <label><input type="radio" name = "gender" checked>Female</label>
+                <label><input type="radio" name = "gender">XXX</label>
+                <label><input type="radio" name = "gender">ZZZ</label>
+                </div>
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">Title</label>
+                <label>Sales Representative</label>
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">Suffix</label>
+                <input type="text" value="Ms."/>
+            </div>
+            <div class = "form-group">
+                <label class = "label-title"> BirthDate</label>
+                <input type="datetime" value="1969-07-02 00:00:00" />
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">HireDate</label>
+                <input type="datetime" value="1994-11-15 00:00:00" />
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">SSN # (if applicable)</label>
+                <input type="text" />
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">Reports To</label>
+                <select>
+                    <option>Buchanan</option>
+                    <option>Chacha</option>
+                </select>
+            </div>
+        </section>
+        <br>
+        <setion>
+            <h2>Contact Info</h2>
+            <hr>
+            <div class = "form-group">
+                <label class = "label-title">Email</label>
+                <input type="text" placeholder="name@example.com">
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">Email</label>
+                <input type="text" value = "7 Houndstooth Rd.">
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">City</label>
+                <input type="text" value = "London">
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">Region</label>
+                <input type="text" value = "">
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">Postal</label>
+                <input type="text" value = "WG2 7LT">
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">Country</label>
+                <select>
+                    <option>Russian Federation</option>
+                    <option>UK Federation</option>
+                    <option>US Federation</option>
+                </select>
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">US Home Phone</label>
+                <input type="text" value = "(234)234-2342">
+            </div>
+            <div class = "form-group">
+                <label class = "label-title">Photo</label>
+                <input type="text" value = "EmpID9.bmp">
+            </div>
+        </setion>
+        <br>
+        section>
+            <h2>Optional Info</h2>
+            <hr>
+            <div class = "form-group">
+                <label class = "label-title"> Notes</label>
+                <textarea rows="7" cols="50">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</textarea>
+            </div>
+            <div class = "form-group">
+                <label class = "label-title"> Preferred Shift</label>
+                <div class = "checkbox-group">
+                <label><input type="checkbox" name = "shift">Regular</label> <br>
+                <label><input type="checkbox" name = "shift">Gravy Yard</label>
+                </div>
+            </div>
+            <div>
+                <label class = "label-title">Active?</label>
+                
+            </div>
+        </section>
+    </form>
+</body>
+</html> 

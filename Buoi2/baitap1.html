@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
+  .form-row{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px;
+  }
+  .form-row input {
+    width: 40%;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .form-row input.half {
+      flex: 1 1 45%;
+    }
+    /* Subject chiếm cả hàng */
+    .form-row input.full {
+      flex: 1 1 100%;
+    }
+  .form-row textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    height: 100px;
+  }
+  .form-row button {
+    padding: 10px 20px;
+    background-color: #4c65af;
+    color: white;
+    cursor: pointer;
+  }
+  .form-row.actions {
+  justify-content: space-between;
+  align-items: center;
+}
+
+</style>
+<body>
+   <h2>Get in touch with us by filling contact form below</h2>
+  <form>
+    <!-- Hàng 1: Name & Email -->
+    <div class="form-row">
+      <input type="text" placeholder="* Enter your full name" class="half">
+      <input type="email" placeholder="* Enter your email address" class="half">
+    </div>
+    <!-- Hàng 2: Subject -->
+    <div class="form-row">
+      <input type="text" placeholder="* Enter your subject" class = "full">
+    </div>
+    <div class="form-row">
+      <textarea placeholder="* Your message here..."></textarea>
+    </div>
+     <div class="form-row actions">
+      <button type="submit">Send message</button>
+      <span>* Please fill all required form field, thanks!</span>
+    </div>
+  </form>
+</body>
+</html>

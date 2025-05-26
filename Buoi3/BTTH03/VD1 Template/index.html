@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body{
+        font-family: 'Times New Roman', Times, serif, sans-serif;
+        background-color: #f4f4f4;
+        text-align: center;
+        margin: 10px;
+    }
+    h1{
+        text-align: center;
+    }
+    .todo-container{
+        display: flex;
+        justify-content: center;
+    }
+    .taskInput, button {
+    height: 40px;
+    font-size: 16px;
+    margin: 0 10px;
+    }   
+
+    .taskInput{
+        width: 60%;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    </style>
+</head>
+<body>
+    <script> 
+        let tasks = JSON.parse(localStorage.getItem("tasks")) || []
+        const taskInput = document.getElementById("taskInput")
+        const addBtn = document.getElementById("addBtn")
+        const taskList = document.getElementById("taskList")
+        const filterSelect = document.getElementById("filterSelect")
+
+        function saveTask(){
+            localStorage.setItem("tasks", JSON.stringify(tasks))
+        }
+
+        function renderTask(){
+            taskList.innerHTML = "";
+
+            const filter = filterSelect.value;
+            tasks.forEach((task, index) => {
+                if (
+                    (filter === "completed" && !task.completed) ||
+                    (filter === "active" && task.completed)
+                ) {
+                    return; // Bỏ qua nếu không khớp bộ lọc
+                }
+               
+                const li = document.createElement("li");
+
+                const span = document.createElement("span");
+                span.textContent = task.name;
+                span.className = "task-content";
+            });
+        }
+
+    </script>
+    <h1>Todo List JS</h1>
+
+    <div class="todo-container">
+      <input type="text" id="taskInput" placeholder="Nhập công việc..." />
+      <button id = "addBtn">Thêm</button>
+    </div>
+
+    <div>
+        <label for="filterSelect">Lọc Công Việc:</label>
+        
+        <select id="filterSelect">
+            <option value="all">Tất cả</option>
+            <option value="active">Đang thực hiện</option>
+            <option value="completed">Đã hoàn thành</option>
+        </select>
+        <ul id = "taskList"></ul>
+    </div>
+    
+</body>
+</html>

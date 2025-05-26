@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Todo List - JavaScript</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1 style="text-align: center; margin-bottom: 50px; color: rgb(134, 56, 1)">
+      Todo List JS
+    </h1>
+
+    <div class="todo-container">
+      <input type="text" id="taskInput" placeholder="Nhập công việc..." />
+      <button id="addBtn">Thêm</button>
+
+      <!-- Bộ lọc -->
+      <div style="margin: 20px 0">
+        <label for="filterSelect">Lọc công việc:</label>
+        <select id="filterSelect">
+          <option value="all">Tất cả</option>
+          <option value="active">Chưa hoàn thành</option>
+          <option value="completed">Đã hoàn thành</option>
+        </select>
+      </div>
+
+      <!-- Danh sách công việc -->
+      <ul id="taskList"></ul>
+    </div>
+
+    <!-- Gắn file script JS -->
+    <script src="script.js"></script>
+  </body>
+</html>
